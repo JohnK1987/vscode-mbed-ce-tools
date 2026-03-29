@@ -1,0 +1,7 @@
+.git/**
+.vscode/**
+src/**
+tsconfig.json
+package-lock.json
+vs-code-mbed-ce-*.vsix
+DEVELOPMENT.md

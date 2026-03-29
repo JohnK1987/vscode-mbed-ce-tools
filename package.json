@@ -1,0 +1,206 @@
+{
+    "name": "vscode-mbed-ce-tools",
+    "displayName": "Mbed CE Tools",
+    "description": "VS Code workflow extension for Mbed CE projects and build commands.",
+    "version": "0.0.1-alpha.1",
+    "publisher": "mbed-ce",
+    "license": "Apache-2.0",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "mbedCe",
+                    "title": "Mbed CE",
+                    "icon": "media/mbed-ce.svg"
+                }
+            ]
+        },
+        "views": {
+            "mbedCe": [
+                {
+                    "id": "mbedCe.sidebar",
+                    "name": "Mbed CE",
+                    "type": "webview",
+                    "icon": "media/mbed-ce.svg"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "mbedCe.newProject",
+                "title": "Mbed CE: New Project"
+            },
+            {
+                "command": "mbedCe.loadProject",
+                "title": "Mbed CE: Load Project"
+            },
+            {
+                "command": "mbedCe.checkRequirements",
+                "title": "Mbed CE: Check Requirements"
+            },
+            {
+                "command": "mbedCe.selectTarget",
+                "title": "Mbed CE: Select Target"
+            },
+            {
+                "command": "mbedCe.selectBuildType",
+                "title": "Mbed CE: Select Build Type"
+            },
+            {
+                "command": "mbedCe.selectUploadMethod",
+                "title": "Mbed CE: Select Upload Method"
+            },
+            {
+                "command": "mbedCe.configure",
+                "title": "Mbed CE: Configure"
+            },
+            {
+                "command": "mbedCe.cleanBuild",
+                "title": "Mbed CE: Clean Build"
+            },
+            {
+                "command": "mbedCe.build",
+                "title": "Mbed CE: Build"
+            },
+            {
+                "command": "mbedCe.buildDeploy",
+                "title": "Mbed CE: Deploy"
+            },
+            {
+                "command": "mbedCe.refresh",
+                "title": "Mbed CE: Refresh"
+            },
+            {
+                "command": "mbedCe.stop",
+                "title": "Mbed CE: Stop"
+            }
+        ],
+        "menus": {},
+        "configuration": {
+            "title": "Mbed CE Tools",
+            "properties": {
+                "mbedCe.toolchainCheckCommands": {
+                    "type": "array",
+                    "default": [
+                        "git --version",
+                        "python --version",
+                        "cmake --version",
+                        "ninja --version",
+                        "arm-none-eabi-gcc --version"
+                    ],
+                    "description": "Commands used to verify that the build toolchain is available."
+                },
+                "mbedCe.buildDirectory": {
+                    "type": "string",
+                    "default": "${projectRoot}/build/${target}-${buildType}",
+                    "description": "Template for the configured build output folder used by Configure, Build, and Deploy."
+                },
+                "mbedCe.configureCommand": {
+                    "type": "string",
+                    "default": "cmake -DCMAKE_BUILD_TYPE:STRING=${buildType} -DMBED_TARGET:STRING=${target} -DUPLOAD_METHOD:STRING=${uploadMethod}${mbedUploadSerialNumberArgument} -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE --no-warn-unused-cli -S \"${projectRoot}\" -B \"${buildDirectory}\" -G Ninja",
+                    "description": "Command used for the Configure action. Supports ${mbedUploadSerialNumberArgument} when the selected target entry defines serialNumber."
+                },
+                "mbedCe.buildCommand": {
+                    "type": "string",
+                    "default": "cmake --build \"${buildDirectory}\" --config ${buildType} --target all --",
+                    "description": "Command used for the Build action."
+                },
+                "mbedCe.deployCommand": {
+                    "type": "string",
+                    "default": "cmake --build \"${buildDirectory}\" --config ${buildType} --target flash-${deployTarget} --",
+                    "description": "Command used for the Deploy action after the project is configured."
+                },
+                "mbedCe.defaultBuildType": {
+                    "type": "string",
+                    "default": "Develop",
+                    "enum": [
+                        "Debug",
+                        "Develop",
+                        "Release"
+                    ],
+                    "description": "Default build type when no workspace selection is stored."
+                },
+                "mbedCe.recommendedExtensionIds": {
+                    "type": "array",
+                    "default": [
+                        "ms-vscode.cpptools",
+                        "marus25.cortex-debug"
+                    ],
+                    "description": "VS Code extension ids recommended for the Mbed CE workflow."
+                },
+                "mbedCe.projectTemplate": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Optional git clone source for new projects. This can be a repository URL or a local git repository path. If empty, the official mbed-ce-hello-world repository is used."
+                },
+                "mbedCe.projectRootPath": {
+                    "type": "string",
+                    "default": "${workspaceFolder}",
+                    "scope": "resource",
+                    "description": "Folder that contains the top-level CMakeLists.txt file. Use the project root folder itself, not the CMakeLists.txt file path."
+                },
+                "mbedCe.defaultProjectsRoot": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Default folder used as the starting location for Load Project and New Project. If empty, the user's home folder is used."
+                },
+                "mbedCe.revealViewAfterProjectOpen": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Reveal the Mbed CE view after Load Project or New Project reopens the selected folder."
+                },
+                "mbedCe.manageCppToolsProvider": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When the C/C++ extension is installed, select Mbed CE Tools as the active C/C++ configuration provider for this workspace so IntelliSense follows the current Mbed CE build."
+                },
+                "mbedCe.mbedOsPath": {
+                    "type": "string",
+                    "default": "${projectRoot}/mbed-os",
+                    "scope": "resource",
+                    "description": "Path to the mbed-os folder used for target parsing and upload-method parsing. Use the folder itself, not targets.json5."
+                },
+                "mbedCe.customTargetsPath": {
+                    "type": "string",
+                    "default": "${projectRoot}/custom_targets",
+                    "scope": "resource",
+                    "description": "Path to the custom_targets folder used for custom target parsing and custom upload-method parsing. Use the folder itself, not custom_targets.json5."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "package": "npx @vscode/vsce package",
+        "vscode:prepublish": "npm run compile"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.10",
+        "@types/vscode": "^1.90.0",
+        "typescript": "^5.5.4"
+    },
+    "dependencies": {
+        "@vscode/codicons": "^0.0.45",
+        "json5": "^2.2.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JohnK1987/vscode-mbed-ce-tools.git"
+    },
+    "homepage": "https://github.com/JohnK1987/vscode-mbed-ce-tools",
+    "bugs": {
+        "url": "https://github.com/JohnK1987/vscode-mbed-ce-tools/issues"
+    },
+    "icon": "media/mbed-ce.png"
+}
