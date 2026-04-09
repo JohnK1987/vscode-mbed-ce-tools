@@ -40,16 +40,16 @@ let showStartPage = false;
 let workspaceInitializationPromise: Promise<void> | undefined;
 let cppToolsProviderHandle: CppToolsProviderHandle = { hasActiveConfiguration: async () => false, refresh: async () => undefined, dispose: () => undefined };
 const FULL_REINITIALIZATION_SETTINGS = [
-  "mbedCe.projectRootPath",
-  "mbedCe.mbedOsPath",
-  "mbedCe.customTargetsPath"
+  "mbed-ce.projectRootPath",
+  "mbed-ce.mbedOsPath",
+  "mbed-ce.customTargetsPath"
 ] as const;
 const REFRESH_ONLY_SETTINGS = [
-  "mbedCe.buildDirectory",
-  "mbedCe.defaultBuildType",
-  "mbedCe.configureCommand",
-  "mbedCe.buildCommand",
-  "mbedCe.deployCommand"
+  "mbed-ce.buildDirectory",
+  "mbed-ce.defaultBuildType",
+  "mbed-ce.configureCommand",
+  "mbed-ce.buildCommand",
+  "mbed-ce.deployCommand"
 ] as const;
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -85,21 +85,21 @@ export function activate(context: vscode.ExtensionContext): void {
     };
 
     context.subscriptions.push(
-      vscode.window.registerWebviewViewProvider("mbedCe.sidebar", sidebarProvider),
-      vscode.commands.registerCommand("mbedCe.refresh", () => refreshExtensionUi()),
-      vscode.commands.registerCommand("mbedCe.newProject", async () => { showStartPage = false; await createNewProject(queueSidebarRevealAfterProjectOpen); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.loadProject", async () => { showStartPage = false; await loadProject(queueSidebarRevealAfterProjectOpen); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.showStartPage", () => { showStartPage = true; sidebarProvider.refresh(); }),
-      vscode.commands.registerCommand("mbedCe.showProjectPage", () => { showStartPage = false; sidebarProvider.refresh(); }),
-      vscode.commands.registerCommand("mbedCe.checkRequirements", async () => { await checkRequirements(); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.selectTarget", async () => { await selectTarget(); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.selectBuildType", async () => { await selectBuildType(); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.selectUploadMethod", async () => { await selectUploadMethod(); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.configure", async () => { await runAction("configure", refreshExtensionUi); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.cleanBuild", async () => { await runAction("cleanBuild", refreshExtensionUi); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.build", async () => { await runAction("build", refreshExtensionUi); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.buildDeploy", async () => { await runAction("buildDeploy", refreshExtensionUi); refreshExtensionUi(); }),
-      vscode.commands.registerCommand("mbedCe.stop", async () => {
+      vscode.window.registerWebviewViewProvider("mbed-ce.sidebar", sidebarProvider),
+      vscode.commands.registerCommand("mbed-ce.refresh", () => refreshExtensionUi()),
+      vscode.commands.registerCommand("mbed-ce.newProject", async () => { showStartPage = false; await createNewProject(queueSidebarRevealAfterProjectOpen); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.loadProject", async () => { showStartPage = false; await loadProject(queueSidebarRevealAfterProjectOpen); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.showStartPage", () => { showStartPage = true; sidebarProvider.refresh(); }),
+      vscode.commands.registerCommand("mbed-ce.showProjectPage", () => { showStartPage = false; sidebarProvider.refresh(); }),
+      vscode.commands.registerCommand("mbed-ce.checkRequirements", async () => { await checkRequirements(); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.selectTarget", async () => { await selectTarget(); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.selectBuildType", async () => { await selectBuildType(); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.selectUploadMethod", async () => { await selectUploadMethod(); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.configure", async () => { await runAction("configure", refreshExtensionUi); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.cleanBuild", async () => { await runAction("cleanBuild", refreshExtensionUi); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.build", async () => { await runAction("build", refreshExtensionUi); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.buildDeploy", async () => { await runAction("buildDeploy", refreshExtensionUi); refreshExtensionUi(); }),
+      vscode.commands.registerCommand("mbed-ce.stop", async () => {
         await stopActiveAction();
         refreshExtensionUi();
       }),
@@ -111,7 +111,7 @@ export function activate(context: vscode.ExtensionContext): void {
         refreshExtensionUi();
       }),
       vscode.workspace.onDidChangeConfiguration(async (event) => {
-        if (event.affectsConfiguration("mbedCe.manageCppToolsProvider")) {
+        if (event.affectsConfiguration("mbed-ce.manageCppToolsProvider")) {
           await syncCppToolsConfigurationProvider();
           refreshExtensionUi();
           return;
@@ -175,10 +175,10 @@ export function deactivate(): void {}
 
 function createStatusBarItems(): vscode.StatusBarItem[] {
   const statusBarSpecs = [
-    { text: "$(gear) Configure", command: "mbedCe.configure", tooltip: "Configure Mbed CE project", priority: -101 },
-    { text: "$(trash) Clean", command: "mbedCe.cleanBuild", tooltip: "Clean build Mbed CE project", priority: -102 },
-    { text: "$(build) Build", command: "mbedCe.build", tooltip: "Build Mbed CE project", priority: -103 },
-    { text: "$(download) Deploy", command: "mbedCe.buildDeploy", tooltip: "Build and deploy Mbed CE project", priority: -104 }
+    { text: "$(gear) Configure", command: "mbed-ce.configure", tooltip: "Configure Mbed CE project", priority: -101 },
+    { text: "$(trash) Clean", command: "mbed-ce.cleanBuild", tooltip: "Clean build Mbed CE project", priority: -102 },
+    { text: "$(build) Build", command: "mbed-ce.build", tooltip: "Build Mbed CE project", priority: -103 },
+    { text: "$(download) Deploy", command: "mbed-ce.buildDeploy", tooltip: "Build and deploy Mbed CE project", priority: -104 }
   ] as const;
 
   return statusBarSpecs.map((spec) => {
@@ -195,7 +195,7 @@ function createStopStatusBarItem(): vscode.StatusBarItem {
   const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -105);
   item.name = "Mbed CE: Stop current action";
   item.text = "$(debug-stop) Stop";
-  item.command = "mbedCe.stop";
+  item.command = "mbed-ce.stop";
   item.tooltip = "Stop the running Mbed CE action";
   item.hide();
   return item;
@@ -219,7 +219,7 @@ async function updateStatusBarItems(): Promise<void> {
   const hasDeployTarget = projectInfo.deployTargets.length > 0;
 
   for (const item of statusBarItems) {
-    const itemShouldShow = shouldShow && (item.command !== "mbedCe.buildDeploy" || hasDeployTarget);
+    const itemShouldShow = shouldShow && (item.command !== "mbed-ce.buildDeploy" || hasDeployTarget);
     updateStatusBarVisibility(item, itemShouldShow);
   }
 
@@ -255,7 +255,7 @@ async function queueSidebarRevealAfterProjectOpen(): Promise<void> {
     return;
   }
 
-  const shouldReveal = vscode.workspace.getConfiguration("mbedCe").get<boolean>("revealViewAfterProjectOpen", false);
+  const shouldReveal = vscode.workspace.getConfiguration("mbed-ce").get<boolean>("revealViewAfterProjectOpen", false);
   if (!shouldReveal) {
     return;
   }
@@ -269,7 +269,7 @@ async function maybeRevealSidebarAfterProjectOpen(): Promise<void> {
   }
 
   await extensionContext.globalState.update(REVEAL_SIDEBAR_AFTER_PROJECT_OPEN_STATE_KEY, false);
-  await vscode.commands.executeCommand("workbench.view.extension.mbedCe");
+  await vscode.commands.executeCommand("workbench.view.extension.mbed-ce");
 }
 
 async function inspectWorkspace(): Promise<WorkspaceInspection> {
@@ -308,7 +308,7 @@ async function getSelectedTarget(projectInfo?: WorkspaceInspection): Promise<str
 function getSelectedBuildType(): string {
   return resolveSelectedBuildType(
     getWorkspaceState<string>(BUILD_TYPE_STATE_KEY),
-    vscode.workspace.getConfiguration("mbedCe").get<string>("defaultBuildType", "Develop")
+    vscode.workspace.getConfiguration("mbed-ce").get<string>("defaultBuildType", "Develop")
   );
 }
 
@@ -380,7 +380,7 @@ async function syncCppToolsConfigurationProvider(projectInfo?: WorkspaceInspecti
 
   const cppConfig = vscode.workspace.getConfiguration("C_Cpp", workspaceFolder.uri);
   const currentProvider = cppConfig.get<string>("default.configurationProvider");
-  const shouldManage = vscode.workspace.getConfiguration("mbedCe", workspaceFolder.uri).get<boolean>("manageCppToolsProvider", true);
+  const shouldManage = vscode.workspace.getConfiguration("mbed-ce", workspaceFolder.uri).get<boolean>("manageCppToolsProvider", true);
 
   if (!shouldManage) {
     if (currentProvider === CPPTOOLS_CONFIGURATION_PROVIDER_ID) {

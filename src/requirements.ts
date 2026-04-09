@@ -12,7 +12,7 @@ export async function checkRequirementsCommand(output: vscode.OutputChannel): Pr
   const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
   const cwd = workspaceFolder?.uri.fsPath ?? os.homedir();
 
-  const config = vscode.workspace.getConfiguration("mbedCe");
+  const config = vscode.workspace.getConfiguration("mbed-ce");
   const checks = getRequirementChecks(config);
   if (checks.length === 0) {
     void vscode.window.showWarningMessage("No requirement check commands are configured.");

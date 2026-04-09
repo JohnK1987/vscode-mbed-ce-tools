@@ -60,7 +60,7 @@ export async function runProjectAction(action: ProjectAction, dependencies: Proj
     return;
   }
 
-  const config = vscode.workspace.getConfiguration("mbedCe");
+  const config = vscode.workspace.getConfiguration("mbed-ce");
   const workspaceFolderPath = projectInfo.workspaceFolder.uri.fsPath;
   const projectRootPath = projectInfo.projectRootPath ?? workspaceFolderPath;
   const baseValues: TemplateValues = {

@@ -2,19 +2,19 @@ import * as vscode from "vscode";
 
 export type ProjectAction = "configure" | "cleanBuild" | "build" | "buildDeploy";
 
-export type ActionCommand = "mbedCe.configure" | "mbedCe.cleanBuild" | "mbedCe.build" | "mbedCe.buildDeploy";
+export type ActionCommand = "mbed-ce.configure" | "mbed-ce.cleanBuild" | "mbed-ce.build" | "mbed-ce.buildDeploy";
 
 export type SidebarCommand =
   | ActionCommand
-  | "mbedCe.stop"
-  | "mbedCe.newProject"
-  | "mbedCe.loadProject"
-  | "mbedCe.showStartPage"
-  | "mbedCe.showProjectPage"
-  | "mbedCe.checkRequirements"
-  | "mbedCe.selectTarget"
-  | "mbedCe.selectBuildType"
-  | "mbedCe.selectUploadMethod";
+  | "mbed-ce.stop"
+  | "mbed-ce.newProject"
+  | "mbed-ce.loadProject"
+  | "mbed-ce.showStartPage"
+  | "mbed-ce.showProjectPage"
+  | "mbed-ce.checkRequirements"
+  | "mbed-ce.selectTarget"
+  | "mbed-ce.selectBuildType"
+  | "mbed-ce.selectUploadMethod";
 
 export type UploadMethodInfo = {
   available: string[];

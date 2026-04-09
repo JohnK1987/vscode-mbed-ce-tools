@@ -19,16 +19,16 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "mbedCe",
+                    "id": "mbed-ce",
                     "title": "Mbed CE",
                     "icon": "media/mbed-ce.svg"
                 }
             ]
         },
         "views": {
-            "mbedCe": [
+            "mbed-ce": [
                 {
-                    "id": "mbedCe.sidebar",
+                    "id": "mbed-ce.sidebar",
                     "name": "Mbed CE",
                     "type": "webview",
                     "icon": "media/mbed-ce.svg"
@@ -37,51 +37,51 @@
         },
         "commands": [
             {
-                "command": "mbedCe.newProject",
+                "command": "mbed-ce.newProject",
                 "title": "Mbed CE: New Project"
             },
             {
-                "command": "mbedCe.loadProject",
+                "command": "mbed-ce.loadProject",
                 "title": "Mbed CE: Load Project"
             },
             {
-                "command": "mbedCe.checkRequirements",
+                "command": "mbed-ce.checkRequirements",
                 "title": "Mbed CE: Check Requirements"
             },
             {
-                "command": "mbedCe.selectTarget",
+                "command": "mbed-ce.selectTarget",
                 "title": "Mbed CE: Select Target"
             },
             {
-                "command": "mbedCe.selectBuildType",
+                "command": "mbed-ce.selectBuildType",
                 "title": "Mbed CE: Select Build Type"
             },
             {
-                "command": "mbedCe.selectUploadMethod",
+                "command": "mbed-ce.selectUploadMethod",
                 "title": "Mbed CE: Select Upload Method"
             },
             {
-                "command": "mbedCe.configure",
+                "command": "mbed-ce.configure",
                 "title": "Mbed CE: Configure"
             },
             {
-                "command": "mbedCe.cleanBuild",
+                "command": "mbed-ce.cleanBuild",
                 "title": "Mbed CE: Clean Build"
             },
             {
-                "command": "mbedCe.build",
+                "command": "mbed-ce.build",
                 "title": "Mbed CE: Build"
             },
             {
-                "command": "mbedCe.buildDeploy",
+                "command": "mbed-ce.buildDeploy",
                 "title": "Mbed CE: Deploy"
             },
             {
-                "command": "mbedCe.refresh",
+                "command": "mbed-ce.refresh",
                 "title": "Mbed CE: Refresh"
             },
             {
-                "command": "mbedCe.stop",
+                "command": "mbed-ce.stop",
                 "title": "Mbed CE: Stop"
             }
         ],
@@ -89,7 +89,7 @@
         "configuration": {
             "title": "Mbed CE Tools",
             "properties": {
-                "mbedCe.toolchainCheckCommands": {
+                "mbed-ce.toolchainCheckCommands": {
                     "type": "array",
                     "default": [
                         "git --version",
@@ -100,27 +100,27 @@
                     ],
                     "description": "Commands used to verify that the build toolchain is available."
                 },
-                "mbedCe.buildDirectory": {
+                "mbed-ce.buildDirectory": {
                     "type": "string",
                     "default": "${projectRoot}/build/${target}-${buildType}",
                     "description": "Template for the configured build output folder used by Configure, Build, and Deploy."
                 },
-                "mbedCe.configureCommand": {
+                "mbed-ce.configureCommand": {
                     "type": "string",
                     "default": "cmake -DCMAKE_BUILD_TYPE:STRING=${buildType} -DMBED_TARGET:STRING=${target} -DUPLOAD_METHOD:STRING=${uploadMethod}${mbedUploadSerialNumberArgument} -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE --no-warn-unused-cli -S \"${projectRoot}\" -B \"${buildDirectory}\" -G Ninja",
                     "description": "Command used for the Configure action. Supports ${mbedUploadSerialNumberArgument} when the selected target entry defines serialNumber."
                 },
-                "mbedCe.buildCommand": {
+                "mbed-ce.buildCommand": {
                     "type": "string",
                     "default": "cmake --build \"${buildDirectory}\" --config ${buildType} --target all --",
                     "description": "Command used for the Build action."
                 },
-                "mbedCe.deployCommand": {
+                "mbed-ce.deployCommand": {
                     "type": "string",
                     "default": "cmake --build \"${buildDirectory}\" --config ${buildType} --target flash-${deployTarget} --",
                     "description": "Command used for the Deploy action after the project is configured."
                 },
-                "mbedCe.defaultBuildType": {
+                "mbed-ce.defaultBuildType": {
                     "type": "string",
                     "default": "Develop",
                     "enum": [
@@ -130,7 +130,7 @@
                     ],
                     "description": "Default build type when no workspace selection is stored."
                 },
-                "mbedCe.recommendedExtensionIds": {
+                "mbed-ce.recommendedExtensionIds": {
                     "type": "array",
                     "default": [
                         "ms-vscode.cpptools",
@@ -138,39 +138,39 @@
                     ],
                     "description": "VS Code extension ids recommended for the Mbed CE workflow."
                 },
-                "mbedCe.projectTemplate": {
+                "mbed-ce.projectTemplate": {
                     "type": "string",
                     "default": "",
                     "description": "Optional git clone source for new projects. This can be a repository URL or a local git repository path. If empty, the official mbed-ce-hello-world repository is used."
                 },
-                "mbedCe.projectRootPath": {
+                "mbed-ce.projectRootPath": {
                     "type": "string",
                     "default": "${workspaceFolder}",
                     "scope": "resource",
                     "description": "Folder that contains the top-level CMakeLists.txt file. Use the project root folder itself, not the CMakeLists.txt file path."
                 },
-                "mbedCe.defaultProjectsRoot": {
+                "mbed-ce.defaultProjectsRoot": {
                     "type": "string",
                     "default": "",
                     "description": "Default folder used as the starting location for Load Project and New Project. If empty, the user's home folder is used."
                 },
-                "mbedCe.revealViewAfterProjectOpen": {
+                "mbed-ce.revealViewAfterProjectOpen": {
                     "type": "boolean",
                     "default": false,
                     "description": "Reveal the Mbed CE view after Load Project or New Project reopens the selected folder."
                 },
-                "mbedCe.manageCppToolsProvider": {
+                "mbed-ce.manageCppToolsProvider": {
                     "type": "boolean",
                     "default": true,
                     "description": "When the C/C++ extension is installed, select Mbed CE Tools as the active C/C++ configuration provider for this workspace so IntelliSense follows the current Mbed CE build."
                 },
-                "mbedCe.mbedOsPath": {
+                "mbed-ce.mbedOsPath": {
                     "type": "string",
                     "default": "${projectRoot}/mbed-os",
                     "scope": "resource",
                     "description": "Path to the mbed-os folder used for target parsing and upload-method parsing. Use the folder itself, not targets.json5."
                 },
-                "mbedCe.customTargetsPath": {
+                "mbed-ce.customTargetsPath": {
                     "type": "string",
                     "default": "${projectRoot}/custom_targets",
                     "scope": "resource",

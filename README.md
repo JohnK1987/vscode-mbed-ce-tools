@@ -48,8 +48,8 @@ The extension is designed to stay close to the real Mbed CE command-line flow in
 Target discovery order:
 
 1. use `.vscode/mbed-ce-targets.json5` if it already exists
-2. otherwise parse `${mbedCe.customTargetsPath}/custom_targets.json5` and `${mbedCe.mbedOsPath}/targets/targets.json5`, then generate `.vscode/mbed-ce-targets.json5`
-3. otherwise parse `${mbedCe.mbedOsPath}/targets/targets.json5`, then generate `.vscode/mbed-ce-targets.json5`
+2. otherwise parse `${mbed-ce.customTargetsPath}/custom_targets.json5` and `${mbed-ce.mbedOsPath}/targets/targets.json5`, then generate `.vscode/mbed-ce-targets.json5`
+3. otherwise parse `${mbed-ce.mbedOsPath}/targets/targets.json5`, then generate `.vscode/mbed-ce-targets.json5`
 
 Only public targets are included when reading from JSON5 target databases. After `.vscode/mbed-ce-targets.json5` exists, the extension treats it as a user-curated target list and does not overwrite it during normal inspection or UI refreshes. When the extension generates the helper file, it shows a notification so the new file does not come as a surprise. The file is safe to edit manually or delete if you want the extension to regenerate it later. A top-level `CMakeLists.txt` alone does not enable the Mbed workflow UI.
 
@@ -74,8 +74,8 @@ If `serialNumber` is present for the selected target, the configure step automat
 
 When a board is selected, the extension looks for upload-method configuration in:
 
-1. `${mbedCe.customTargetsPath}/upload_method_cfg/<TARGET>.cmake`
-2. `${mbedCe.mbedOsPath}/targets/upload_method_cfg/<TARGET>.cmake`
+1. `${mbed-ce.customTargetsPath}/upload_method_cfg/<TARGET>.cmake`
+2. `${mbed-ce.mbedOsPath}/targets/upload_method_cfg/<TARGET>.cmake`
 
 It parses:
 
@@ -107,13 +107,13 @@ Default command templates are exposed as extension settings.
 
 Important defaults:
 
-- `mbedCe.buildDirectory`
+- `mbed-ce.buildDirectory`
   - `${projectRoot}/build/${target}-${buildType}`
-- `mbedCe.configureCommand`
+- `mbed-ce.configureCommand`
   - `cmake -DCMAKE_BUILD_TYPE:STRING=${buildType} -DMBED_TARGET:STRING=${target} -DUPLOAD_METHOD:STRING=${uploadMethod}${mbedUploadSerialNumberArgument} -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE --no-warn-unused-cli -S "${projectRoot}" -B "${buildDirectory}" -G Ninja`
-- `mbedCe.buildCommand`
+- `mbed-ce.buildCommand`
   - `cmake --build "${buildDirectory}" --config ${buildType} --target all --`
-- `mbedCe.deployCommand`
+- `mbed-ce.deployCommand`
   - `cmake --build "${buildDirectory}" --config ${buildType} --target flash-${deployTarget} --`
 
 Behavior:
@@ -130,36 +130,36 @@ Behavior:
 
 Main extension settings:
 
-- `mbedCe.toolchainCheckCommands`
-- `mbedCe.buildDirectory`
-- `mbedCe.configureCommand`
-- `mbedCe.buildCommand`
-- `mbedCe.deployCommand`
-- `mbedCe.defaultBuildType`
-- `mbedCe.revealViewAfterProjectOpen`
-- `mbedCe.manageCppToolsProvider`
-- `mbedCe.recommendedExtensionIds`
-- `mbedCe.projectTemplate`
-- `mbedCe.projectRootPath`
-- `mbedCe.defaultProjectsRoot`
-- `mbedCe.mbedOsPath`
-- `mbedCe.customTargetsPath`
+- `mbed-ce.toolchainCheckCommands`
+- `mbed-ce.buildDirectory`
+- `mbed-ce.configureCommand`
+- `mbed-ce.buildCommand`
+- `mbed-ce.deployCommand`
+- `mbed-ce.defaultBuildType`
+- `mbed-ce.revealViewAfterProjectOpen`
+- `mbed-ce.manageCppToolsProvider`
+- `mbed-ce.recommendedExtensionIds`
+- `mbed-ce.projectTemplate`
+- `mbed-ce.projectRootPath`
+- `mbed-ce.defaultProjectsRoot`
+- `mbed-ce.mbedOsPath`
+- `mbed-ce.customTargetsPath`
 
 Notes:
 
-- `mbedCe.projectTemplate` can point to a custom git repository URL or a local git repository path for `New Project`
-- `mbedCe.defaultProjectsRoot` sets the starting folder for `New Project` and `Load Project`; if it is empty, the user home folder is used
-- `mbedCe.projectRootPath` defaults to `${workspaceFolder}`, is project-specific, and points to the folder that contains the main `CMakeLists.txt` file used for configure/build actions and project parsing; it expects the folder path, not the `CMakeLists.txt` file path
-- if the configured project root is missing or does not contain `CMakeLists.txt`, the extension prompts the user to select the correct folder when the workspace still contains a likely Mbed CE project root; changing `mbedCe.projectRootPath` to an invalid value reruns that repair flow
-- relative `mbedCe.buildDirectory` values are resolved from `${projectRoot}` and control where Configure, Build, and Deploy store their generated build output
-- `mbedCe.configureCommand` supports `${mbedUploadSerialNumberArgument}`, which expands to the serial-number CMake define when the selected target entry provides `serialNumber`
-- `mbedCe.mbedOsPath` defaults to `${projectRoot}/mbed-os`, is project-specific, and is used for Mbed OS target parsing and upload-method parsing; it expects the `mbed-os` folder itself, not the `targets.json5` file path
+- `mbed-ce.projectTemplate` can point to a custom git repository URL or a local git repository path for `New Project`
+- `mbed-ce.defaultProjectsRoot` sets the starting folder for `New Project` and `Load Project`; if it is empty, the user home folder is used
+- `mbed-ce.projectRootPath` defaults to `${workspaceFolder}`, is project-specific, and points to the folder that contains the main `CMakeLists.txt` file used for configure/build actions and project parsing; it expects the folder path, not the `CMakeLists.txt` file path
+- if the configured project root is missing or does not contain `CMakeLists.txt`, the extension prompts the user to select the correct folder when the workspace still contains a likely Mbed CE project root; changing `mbed-ce.projectRootPath` to an invalid value reruns that repair flow
+- relative `mbed-ce.buildDirectory` values are resolved from `${projectRoot}` and control where Configure, Build, and Deploy store their generated build output
+- `mbed-ce.configureCommand` supports `${mbedUploadSerialNumberArgument}`, which expands to the serial-number CMake define when the selected target entry provides `serialNumber`
+- `mbed-ce.mbedOsPath` defaults to `${projectRoot}/mbed-os`, is project-specific, and is used for Mbed OS target parsing and upload-method parsing; it expects the `mbed-os` folder itself, not the `targets.json5` file path
 - if the configured Mbed OS folder is missing or does not contain `targets/targets.json5`, the extension prompts the user to select the correct folder after project load and accepts either the `mbed-os` folder itself or a parent folder that contains it
-- `mbedCe.customTargetsPath` defaults to `${projectRoot}/custom_targets`, is project-specific, and is used for custom target parsing and custom upload-method parsing; it expects the `custom_targets` folder itself, not the `custom_targets.json5` file path
+- `mbed-ce.customTargetsPath` defaults to `${projectRoot}/custom_targets`, is project-specific, and is used for custom target parsing and custom upload-method parsing; it expects the `custom_targets` folder itself, not the `custom_targets.json5` file path
 - if the configured `custom_targets` folder is missing or does not contain `custom_targets.json5`, but the extension finds `custom_targets.json5` elsewhere in the workspace, it prompts the user to select the correct folder and accepts either the `custom_targets` folder itself or a parent folder that contains it
 - `.vscode/mbed-ce-targets.json5` is stored at the workspace level and can be edited manually to remove unwanted targets from the selector or add per-target `uploadMethod` and `serialNumber` values; if you delete it, the extension can regenerate it from the configured target databases
-- `mbedCe.manageCppToolsProvider` lets the extension select `Mbed CE Tools` as the active C/C++ configuration provider for Mbed CE workspaces so IntelliSense follows the current configured build
-- if `mbedCe.manageCppToolsProvider` is disabled, the extension clears the active C/C++ provider only when it is currently `Mbed CE Tools`
+- `mbed-ce.manageCppToolsProvider` lets the extension select `Mbed CE Tools` as the active C/C++ configuration provider for Mbed CE workspaces so IntelliSense follows the current configured build
+- if `mbed-ce.manageCppToolsProvider` is disabled, the extension clears the active C/C++ provider only when it is currently `Mbed CE Tools`
 
 ## Requirements Check
 
@@ -174,10 +174,10 @@ The requirements check currently reports:
 
 `Load Project` currently:
 
-- opens a folder picker starting in `mbedCe.defaultProjectsRoot` when it is set
-- falls back to the user home folder when `mbedCe.defaultProjectsRoot` is empty
+- opens a folder picker starting in `mbed-ce.defaultProjectsRoot` when it is set
+- falls back to the user home folder when `mbed-ce.defaultProjectsRoot` is empty
 - reopens the selected folder as the current VS Code workspace
-- can optionally reveal the Mbed CE view after the workspace is reopened when `mbedCe.revealViewAfterProjectOpen` is enabled
+- can optionally reveal the Mbed CE view after the workspace is reopened when `mbed-ce.revealViewAfterProjectOpen` is enabled
 
 ## New Project
 
@@ -188,7 +188,7 @@ The requirements check currently reports:
 - validates Windows-reserved names and trailing space/period cases before cloning
 - clones `mbed-ce-hello-world` by default using `git clone --recurse-submodules`
 - shows clone progress in the `Mbed CE Tasks` output channel while the starter is being downloaded
-- can clone from a custom Git source when `mbedCe.projectTemplate` is set
+- can clone from a custom Git source when `mbed-ce.projectTemplate` is set
 
 ## Reference Projects And Docs
 
@@ -206,7 +206,7 @@ See `DEVELOPMENT.md` for contributor setup, compile steps, running the Extension
 
 - target lists can become very large when read from the full `mbed-os/targets/targets.json5` database
 - upload-method parsing currently uses simple CMake text matching
-- debug actions are not supported in the extension
+- the extension does not add its own debug workflow because debugging is expected to be handled by existing VS Code tools such as `cortex-debug`
 - the extension currently supports only one Mbed CE project per VS Code workspace
 - `CMake Tools` is not required or recommended for the Mbed CE Tools workflow. If you only want CMake highlighting, prefer a syntax-only extension such as `CMake`.
 

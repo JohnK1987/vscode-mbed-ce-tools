@@ -29,7 +29,7 @@ npm run package
 This creates a file like:
 
 ```text
-vscode-mbed-ce-tools-0.0.1-beta.1.vsix
+vscode-mbed-ce-tools-<version>.vsix
 ```
 
 The package is created in the repository root.
@@ -46,7 +46,7 @@ From VS Code:
 From the command line:
 
 ```powershell
-code --install-extension .\vscode-mbed-ce-tools-0.0.1-beta.1.vsix
+code --install-extension .\vscode-mbed-ce-tools-<version>.vsix
 ```
 
 ## Notes
@@ -107,13 +107,13 @@ Use this checklist after larger changes, before packaging, or before release.
 
 ### Settings And Repair Flow
 
-- [ ] Change `mbedCe.projectRootPath` to an invalid value and confirm repair prompt behavior
-- [ ] Change `mbedCe.mbedOsPath` to an invalid value and confirm repair prompt behavior
-- [ ] Change `mbedCe.customTargetsPath` to an invalid value and confirm repair prompt behavior
-- [ ] Change `mbedCe.buildDirectory` and confirm the sidebar state and C/C++ provider refresh correctly
-- [ ] Change `mbedCe.defaultBuildType` and confirm the sidebar and build selection refresh correctly
-- [ ] Change `mbedCe.configureCommand`, `mbedCe.buildCommand`, or `mbedCe.deployCommand` and confirm the next action uses the updated command template
-- [ ] Confirm `mbedCe.projectTemplate` accepts both a Git repository URL and a local Git repository path
+- [ ] Change `mbed-ce.projectRootPath` to an invalid value and confirm repair prompt behavior
+- [ ] Change `mbed-ce.mbedOsPath` to an invalid value and confirm repair prompt behavior
+- [ ] Change `mbed-ce.customTargetsPath` to an invalid value and confirm repair prompt behavior
+- [ ] Change `mbed-ce.buildDirectory` and confirm the sidebar state and C/C++ provider refresh correctly
+- [ ] Change `mbed-ce.defaultBuildType` and confirm the sidebar and build selection refresh correctly
+- [ ] Change `mbed-ce.configureCommand`, `mbed-ce.buildCommand`, or `mbed-ce.deployCommand` and confirm the next action uses the updated command template
+- [ ] Confirm `mbed-ce.projectTemplate` accepts both a Git repository URL and a local Git repository path
 
 ### Reconfigure Behavior
 
@@ -134,7 +134,7 @@ Use this checklist after larger changes, before packaging, or before release.
 
 - [ ] Reload the VS Code window
 - [ ] Confirm the selected board, profile, upload method, and deploy target restore correctly
-- [ ] Confirm `Mbed CE Tools` becomes the active C/C++ provider only after `compile_commands.json` exists when `mbedCe.manageCppToolsProvider` is enabled
+- [ ] Confirm `Mbed CE Tools` becomes the active C/C++ provider only after `compile_commands.json` exists when `mbed-ce.manageCppToolsProvider` is enabled
 
 ### Packaging Check
 

@@ -28,7 +28,7 @@ export async function inspectWorkspace(storedTarget?: string, storedBuildType?: 
   const hasMbedTargets = await fileExists(vscode.Uri.file(mbedTargetsPath));
   const hasLikelyProjectMarkers = await isLikelyMbedCeProjectRoot(projectRootUri);
   const isMbedCeProject = targets.length > 0 || hasLikelyProjectMarkers;
-  const config = vscode.workspace.getConfiguration("mbedCe", workspaceFolder.uri);
+  const config = vscode.workspace.getConfiguration("mbed-ce", workspaceFolder.uri);
   const selectedTarget = resolveSelectedTarget({ targets } as WorkspaceInspection, storedTarget);
   const selectedTargetSettings = selectedTarget ? targetSource.targetSettingsByName[selectedTarget] : undefined;
   const selectedBuildType = resolveSelectedBuildType(
@@ -129,7 +129,7 @@ function getConfiguredPath(
   projectRootPath: string
 ): string {
   const configured = vscode.workspace
-    .getConfiguration("mbedCe", workspaceFolder.uri)
+    .getConfiguration("mbed-ce", workspaceFolder.uri)
     .get<string>(settingKey, defaultValue)
     .trim();
   return expandConfiguredPath(configured, workspaceFolder, projectRootPath);
@@ -143,7 +143,7 @@ function getConfiguredBuildDirectory(
   uploadMethod: string,
   serialNumber: string
 ): string {
-  const template = vscode.workspace.getConfiguration("mbedCe", workspaceFolder.uri).get<string>("buildDirectory", "${projectRoot}/build/${target}-${buildType}");
+  const template = vscode.workspace.getConfiguration("mbed-ce", workspaceFolder.uri).get<string>("buildDirectory", "${projectRoot}/build/${target}-${buildType}");
   const values: TemplateValues = {
     workspaceFolder: workspaceFolder.uri.fsPath,
     projectRoot: projectRootPath,
@@ -288,7 +288,7 @@ async function maybePromptForConfiguredFolder(info: WorkspaceInspection, options
 
   const configValue = toWorkspaceRelativeOrAbsolutePath(info.workspaceFolder, resolvedFolder);
   await vscode.workspace
-    .getConfiguration("mbedCe", info.workspaceFolder.uri)
+    .getConfiguration("mbed-ce", info.workspaceFolder.uri)
     .update(options.settingKey, configValue, vscode.ConfigurationTarget.WorkspaceFolder);
   void vscode.window.showInformationMessage(options.successMessage(resolvedFolder));
   return true;

@@ -19,15 +19,15 @@ type SidebarDependencies = {
 
 function renderProjectSelectionPanel(statusText: string, includeBackToCurrentProject: boolean): string {
   const backAction = includeBackToCurrentProject
-    ? '<button class="linklike" data-command="mbedCe.showProjectPage">Back To Current Project</button>'
+    ? '<button class="linklike" data-command="mbed-ce.showProjectPage">Back To Current Project</button>'
     : '';
 
   return `
     <section class="panel panel-start">
       <h2>Project Selection</h2>
-      ${renderActionButton("mbedCe.checkRequirements", "Check Requirements", "check")}
-      ${renderActionButton("mbedCe.newProject", "New Project", "new")}
-      ${renderActionButton("mbedCe.loadProject", "Load Project", "folder")}
+      ${renderActionButton("mbed-ce.checkRequirements", "Check Requirements", "check")}
+      ${renderActionButton("mbed-ce.newProject", "New Project", "new")}
+      ${renderActionButton("mbed-ce.loadProject", "Load Project", "folder")}
       ${backAction}
       <div class="status">${escapeHtml(statusText)}</div>
     </section>
@@ -94,7 +94,7 @@ export class MbedCeSidebarProvider implements vscode.WebviewViewProvider {
         break;
     }
 
-    await vscode.commands.executeCommand("mbedCe.refresh");
+    await vscode.commands.executeCommand("mbed-ce.refresh");
   }
 
   private async render(): Promise<void> {
@@ -129,7 +129,7 @@ export class MbedCeSidebarProvider implements vscode.WebviewViewProvider {
       ? `
         <div class="action-status action-status-busy">
           <span class="action-status-text">${escapeHtml(activeOperationLabel)}</span>
-          ${renderIconButton("mbedCe.stop", "close", "Stop current action")}
+          ${renderIconButton("mbed-ce.stop", "close", "Stop current action")}
         </div>`
       : `
         <div class="action-status">
@@ -157,7 +157,7 @@ export class MbedCeSidebarProvider implements vscode.WebviewViewProvider {
           <select id="deploy-target-select">${deployTargetOptions}</select>
         </label>` : "";
     const hasDeployTarget = projectInfo.deployTargets.length > 0;
-    const deployAction = hasDeployTarget ? renderActionButton("mbedCe.buildDeploy", "Deploy", "deploy") : "";
+    const deployAction = hasDeployTarget ? renderActionButton("mbed-ce.buildDeploy", "Deploy", "deploy") : "";
     const projectLabel = escapeHtml(projectInfo.workspaceFolder.name);
     const blockedState = !hasTargets
       ? `
@@ -180,9 +180,9 @@ export class MbedCeSidebarProvider implements vscode.WebviewViewProvider {
           <select id="upload-method-select">${uploadOptions}</select>
         </label>${deployTargetField}
         <div class="actions">
-          ${renderActionButton("mbedCe.configure", "Configure", "gear")}
-          ${renderActionButton("mbedCe.cleanBuild", "Clean Build", "clean")}
-          ${renderActionButton("mbedCe.build", "Build", "build")}
+          ${renderActionButton("mbed-ce.configure", "Configure", "gear")}
+          ${renderActionButton("mbed-ce.cleanBuild", "Clean Build", "clean")}
+          ${renderActionButton("mbed-ce.build", "Build", "build")}
           ${deployAction}
         </div>`
       : "";
@@ -193,7 +193,7 @@ export class MbedCeSidebarProvider implements vscode.WebviewViewProvider {
         ${workflowFields}
         ${blockedState}
         ${actionStatus}
-        <button class="linklike" data-command="mbedCe.showStartPage">Change Project</button>
+        <button class="linklike" data-command="mbed-ce.showStartPage">Change Project</button>
         <div class="status">Project: ${projectLabel}</div>
       </section>
     `);

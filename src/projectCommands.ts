@@ -8,7 +8,7 @@ import { fileExists } from "./workspaceProject";
 type BeforeOpenProjectHandler = () => Promise<void> | void;
 
 function getDefaultProjectsRootUri(): vscode.Uri {
-  const configured = vscode.workspace.getConfiguration("mbedCe").get<string>("defaultProjectsRoot", "").trim();
+  const configured = vscode.workspace.getConfiguration("mbed-ce").get<string>("defaultProjectsRoot", "").trim();
   if (configured) {
     return vscode.Uri.file(configured);
   }
@@ -113,7 +113,7 @@ function getProjectNameValidationError(value: string): string | undefined {
 }
 
 function getProjectTemplateSource(): string {
-  const configuredSource = vscode.workspace.getConfiguration("mbedCe").get<string>("projectTemplate", "").trim();
+  const configuredSource = vscode.workspace.getConfiguration("mbed-ce").get<string>("projectTemplate", "").trim();
   if (configuredSource) {
     return configuredSource;
   }

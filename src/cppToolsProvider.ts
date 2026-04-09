@@ -331,7 +331,7 @@ class MbedCeCppToolsProvider {
     const uploadMethod = this.dependencies.getSelectedUploadMethod(projectInfo);
     const serialNumber = projectInfo.selectedTargetSettings?.serialNumber ?? "";
     const buildDirectoryTemplate = vscode.workspace
-      .getConfiguration("mbedCe", projectInfo.workspaceFolder.uri)
+      .getConfiguration("mbed-ce", projectInfo.workspaceFolder.uri)
       .get<string>("buildDirectory", "${projectRoot}/build/${target}-${buildType}");
     const values: TemplateValues = {
       workspaceFolder: workspaceFolderPath,
